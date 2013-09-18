@@ -1,3 +1,53 @@
+###############################################################################
+#                           Tryton snippets                                   #
+###############################################################################
+snippet nan_tryton_header "Tryton: NaN·tic modules file header" b
+#The COPYRIGHT file at the top level of this repository contains the full
+#copyright notices and license terms.
+endsnippet
+
+snippet core_tryton_header "Tryton: Core modules file header" b
+#This file is part of Tryton.  The COPYRIGHT file at the top level of
+#this repository contains the full copyright notices and license terms.
+endsnippet
+
+snippet tryclass "Tryton: new model" b
+from trytond.model import ModelSQL, ModelView
+
+__all__ = ['$1']
+
+
+class ${1:ClassName}(ModelSQL, ModelView):
+    '''${2:Model Visible Name}'''
+    __name__ = '${3:model.name}'
+
+    ${4}
+endsnippet
+
+snippet tryinclass "Tryton: inherit model" b
+from trytond.pool import PoolMeta
+
+__all__ = ['$1']
+__metaclass__ = PoolMeta
+
+
+class ${1:ClassName}:
+    __name__ = '${2:model.name}'
+
+    ${3}
+endsnippet
+
+snippet fields.Char "Tryton: fields.Char()" b
+${1:fieldname} = fields.Char('${2:Field Title}'${3:, translate=True}${4:, required=True}${5:, readonly=True}${6:, help='${7}'})
+endsnippet
+
+snippet fields.Boolean "Tryton: fields.Boolean()" b
+${1:fieldname} = fields.Boolean('${2:Field Title}'${3:, required=True}${4:, readonly=True}${5:, help='${6}'})
+endsnippet
+
+###############################################################################
+#                           OpenERP snippets                                  #
+###############################################################################
 snippet utf8-header "Header encoding UTF-8" b
 # -*- encoding: utf-8 -*-
 endsnippet
