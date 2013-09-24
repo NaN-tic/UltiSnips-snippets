@@ -1,3 +1,88 @@
+###############################################################################
+#                           Tryton snippets                                   #
+###############################################################################
+snippet nan_tryton_header "Tryton: NaN·tic modules file header" b
+<?xml version="1.0"?>
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
+<tryton>
+    <data>
+        ${1}
+    </data>
+</tryton>
+endsnippet
+
+snippet core_tryton_header "Tryton: Core modules file header" b
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<tryton>
+    <data>
+        ${1}
+    </data>
+</tryton>
+endsnippet
+
+snippet nan_tryton_view_header "Tryton: NaN·tic views file header" b
+<?xml version="1.0"?>
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
+<data>
+    ${1}
+</data>
+endsnippet
+
+snippet core_tryton_view_header "Tryton: Core views file header" b
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<data>
+    ${1}
+</data>
+endsnippet
+
+snippet record_data "Tryton: Record for data registers" b
+<record model="${1:model.name}" id="${2:model_name_record_id}">
+    ${3:fields}
+</record>
+endsnippet
+
+snippet record_inform "Tryton: Record for Inherited Form View" b
+<record model="ir.ui.view" id="${1:model_id}_view_form">
+    <field name="model">${2:model.name}</field>
+    <field name="inherit" ref="${3:inherit_model}.${4:$1_view_form}"/>
+    <field name="name">$1_form</field>
+</record>
+endsnippet
+
+snippet record_inlist "Tryton: Record for Inherited List View" b
+<record model="ir.ui.view" id="${1:model_id}_view_list">
+    <field name="model">${2:model.name}</field>
+    <field name="inherit" ref="${3:inherit_model}.${4:$1_view_list}"/>
+    <field name="name">$1_list</field>
+</record>
+endsnippet
+
+snippet field "Tryton: Field tag" b
+<field name="${1:fieldname}">${2:Field Value}</field>
+endsnippet
+
+snippet inform "Tryton: Inherited Form View" b
+<xpath expr="/form/${1:field}[@${2:name}='${3:fieldname}']" position="${4:after}">
+    ${5}
+</xpath>
+endsnippet
+
+snippet intree "Tryton: Inherited Tree View" b
+<xpath expr="/tree/${1:field}[@${2:name}='${3:fieldname}']" position="${4:after}">
+    ${5}
+</xpath>
+endsnippet
+
+
+###############################################################################
+#                           OpenERP snippets                                  #
+###############################################################################
 snippet tryheader "Tryton XML header" b
 <?xml version="1.0"?>
 <!-- This file is part of Tryton. The COPYRIGHT file at the top level of

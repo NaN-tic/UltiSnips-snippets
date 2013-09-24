@@ -18,7 +18,7 @@ __all__ = ['$1']
 
 
 class ${1:ClassName}(ModelSQL, ModelView):
-    '''${2:Model Visible Name}'''
+    '''${2:Model Title}'''
     __name__ = '${3:model.name}'
 
     ${4}
@@ -38,11 +38,107 @@ class ${1:ClassName}:
 endsnippet
 
 snippet fields.Char "Tryton: fields.Char()" b
-${1:fieldname} = fields.Char('${2:Field Title}'${3:, translate=True}${4:, required=True}${5:, readonly=True}${6:, help='${7}'})
+${1:fieldname} = fields.Char('${2:Field Title}'${3:, translate=True}${4:, required=True}${5:, readonly=True}${8}${6:,
+    help='${7}'})
 endsnippet
 
 snippet fields.Boolean "Tryton: fields.Boolean()" b
-${1:fieldname} = fields.Boolean('${2:Field Title}'${3:, required=True}${4:, readonly=True}${5:, help='${6}'})
+${1:fieldname} = fields.Boolean('${2:Field Title}'${3:, required=True}${4:, readonly=True}${7}${5:,
+    help='${6}'})
+endsnippet
+
+snippet fields.Numeric "Tryton: fields.Numeric()" b
+${1:fieldname} = fields.Numeric('${2:Field Title}', digits=(16, ${3:4})${4:, required=True}${5:, readonly=True}${8}${6:,
+    help='${7}'})
+endsnippet
+
+snippet fields.Many2One "Tryton: fields.Many2One()" b
+${1:fieldname} = fields.Many2One('${2:target.model}', '${3:Field Title}'${4:, required=True}${5:, readonly=True}${6:, select=True}${7:, ondelete='${8:CASCADE}'}${11}${9:,
+    help='${10}'})
+endsnippet
+
+snippet fields.One2Many "Tryton: fields.One2Many()" b
+${1:fieldname} = fields.One2Many('${2:target.model}', '${3:many2one_field_in_target}', '${4:Field Title}'${5:, required=True}${6:, readonly=True}${9}${7:,
+    help='${8}'})
+endsnippet
+
+snippet fields.Function "Tryton: fields.Function()" b
+${1:fieldname} = fields.Function(${4:field},
+    'get_$1'${2:, setter='set_$1'}${3:, searcher='search_$1'})
+endsnippet
+
+snippet getter "Tryton: functional field instance getter" b
+def get_${1:fieldname}(self, name):${3}
+    return ${2}
+endsnippet
+
+snippet classgetter "Tryton: functional field class getter" b
+@classmethod
+def get_${1:fieldname}(cls, ${2:records}, name):
+    ${4}
+    return ${3:{record_id: record_value}}
+endsnippet
+
+snippet multigetter "Tryton: function multi fields getter" b
+@classmethod
+def get_${1:name}(cls, ${2:records}, names):
+    ${4}
+    return ${3:{'fieldname': {record_id: record_value}}}
+endsnippet
+
+snippet model_setup "Tryton: __setup__()" b
+@classmethod
+def __setup__(cls):
+    super(${1:ClassName}, cls).__setup__()
+    ${2}
+endsnippet
+
+snippet sql_constraints "Tryton: cls._sql_constraints" b
+cls._sql_constraints += [
+    ${1}
+    ]
+endsnippet
+
+snippet unique_constraint "Tryton: UNIQUE SQL Constraint" b
+('${1:fieldname}_uniq', 'UNIQUE ($1)',
+    'The ${2:Field Title} of the ${3:Model Title} must be unique.'),
+endsnippet
+
+snippet error_messages "Tryton: cls._error_messages extension" b
+cls._error_messages.update({
+    ${1}
+    })
+endsnippet
+
+snippet try_copy "Tryton: copy() reimplementation" b
+@classmethod
+def copy(cls, ${1:records}, default=None):
+    if default is None:
+        default = {}
+    else:
+        default = default.copy()
+    ${3}
+    return super(${2:ClassName}, cls).copy($1, default=default)
+endsnippet
+
+snippet try_write "Tryton: write() reimplementation" b
+@classmethod
+def write(cls, ${1:records}, vals):
+    ${3}
+    super(${2:ClassName}, cls).write($1, vals)
+endsnippet
+
+snippet try_delete "Tryton: delete() reimplementation" b
+@classmethod
+def delete(cls, ${1:records}):
+    ${3}
+    super(${2:ClassName}, cls).delete($1)
+endsnippet
+
+snippet raise_error "Tryton: raise user exception" b
+cls.raise_user_error('${1:exception_text_name}'${2:, (${3:substitution value},)})
+
+        '$1': ('${4:Exception Text}'),
 endsnippet
 
 ###############################################################################
