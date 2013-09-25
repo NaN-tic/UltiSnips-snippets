@@ -52,6 +52,23 @@ ${1:fieldname} = fields.Numeric('${2:Field Title}', digits=(16, ${3:4})${4:, req
     help='${7}'})
 endsnippet
 
+snippet fields.SelectionStatic "Tryton: fields.Selection() static options" b
+${1:fieldname} = fields.Selection([
+        ${2:('draft', 'Draft'),}${3}
+        ], '${4:Field Title}'${5:, required=True}${6:, readonly=True}${7:, select=True}${10}${8:,
+    help='${9}'})
+endsnippet
+
+snippet fields.SelectionDynamic " Tryton: fields.Selection() static options" b
+${1:fieldname} = fields.Selection('get_${2:$1s}', '${3:Field Title}'${4:, sort=True}${5:, selection_change_with=[${6:'fieldname',}]}${7:, required=True}${8:, readonly=True}${9:, select=True}${12}${10:,
+    help='${11}'})
+
+@staticmethod
+def get_$2():
+    return [(name, title),]
+
+endsnippet
+
 snippet fields.Many2One "Tryton: fields.Many2One()" b
 ${1:fieldname} = fields.Many2One('${2:target.model}', '${3:Field Title}'${4:, required=True}${5:, readonly=True}${6:, select=True}${7:, ondelete='${8:CASCADE}'}${11}${9:,
     help='${10}'})
