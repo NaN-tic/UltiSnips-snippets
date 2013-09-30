@@ -2,13 +2,25 @@
 #                           Tryton snippets                                   #
 ###############################################################################
 snippet nan_tryton_header "Tryton: NaN·tic modules file header" b
-#The COPYRIGHT file at the top level of this repository contains the full
-#copyright notices and license terms.
+# The COPYRIGHT file at the top level of this repository contains the full
+# copyright notices and license terms.
 endsnippet
 
 snippet core_tryton_header "Tryton: Core modules file header" b
-#This file is part of Tryton.  The COPYRIGHT file at the top level of
-#this repository contains the full copyright notices and license terms.
+# This file is part of Tryton.  The COPYRIGHT file at the top level of
+# this repository contains the full copyright notices and license terms.
+endsnippet
+
+snippet import_model "Tryton: model classes import" b
+from trytond.model import Workflow, Model, ModelView, ModelSQL, fields
+endsnippet
+
+snippet import_pyson "Tryton: Pyson classes import" b
+from trytond.pyson import In, Eval, Not, Equal, If, Get, Bool
+endsnippet
+
+snippet import_transaction "Tryton: Transaction method import" b
+from trytond.transaction import Transaction
 endsnippet
 
 snippet tryclass "Tryton: new model" b
@@ -103,7 +115,7 @@ def get_${1:name}(cls, ${2:records}, names):
     return ${3:{'fieldname': {record_id: record_value}}}
 endsnippet
 
-snippet model_setup "Tryton: __setup__()" b
+snippet def_setup "Tryton: __setup__()" b
 @classmethod
 def __setup__(cls):
     super(${1:ClassName}, cls).__setup__()
@@ -125,6 +137,14 @@ snippet error_messages "Tryton: cls._error_messages extension" b
 cls._error_messages.update({
     ${1}
     })
+endsnippet
+
+snippet try_create "Tryton: create() reimplementation" b
+@classmethod
+def create(cls, vlist):
+    ${3:for vals in vlist:
+        }
+    ${2:return} super(${1:ClassName}, cls).create(vlist)
 endsnippet
 
 snippet try_copy "Tryton: copy() reimplementation" b
