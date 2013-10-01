@@ -27,18 +27,14 @@ snippet nan_tryton_view_header "Tryton: NaN·tic views file header" b
 <?xml version="1.0"?>
 <!-- The COPYRIGHT file at the top level of this repository contains the full
      copyright notices and license terms. -->
-<data>
-    ${1}
-</data>
+${1}
 endsnippet
 
 snippet core_tryton_view_header "Tryton: Core views file header" b
 <?xml version="1.0"?>
 <!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
 this repository contains the full copyright notices and license terms. -->
-<data>
-    ${1}
-</data>
+${1}
 endsnippet
 
 snippet record_data "Tryton: Record for data registers" b
@@ -58,25 +54,46 @@ endsnippet
 snippet record_inlist "Tryton: Record for Inherited List View" b
 <record model="ir.ui.view" id="${1:model_id}_view_list">
     <field name="model">${2:model.name}</field>
-    <field name="inherit" ref="${3:inherit_model}.${4:$1_view_list}"/>
+    <field name="inherit" ref="${3:inherit_model}.${4:$1_view_${5:tree}}"/>
     <field name="name">$1_list</field>
 </record>
 endsnippet
 
-snippet field "Tryton: Field tag" b
+snippet record_field "Tryton: Record Field Tag" b
 <field name="${1:fieldname}">${2:Field Value}</field>
 endsnippet
 
-snippet inform "Tryton: Inherited Form View" b
-<xpath expr="/form/${1:field}[@${2:name}='${3:fieldname}']" position="${4:after}">
-    ${5}
-</xpath>
+snippet view_form "Tryton: Form View" b
+<form string="${1:Title}"${2: col="${3}"}>
+    ${4}
+</form>
 endsnippet
 
-snippet intree "Tryton: Inherited Tree View" b
-<xpath expr="/tree/${1:field}[@${2:name}='${3:fieldname}']" position="${4:after}">
-    ${5}
-</xpath>
+snippet view_tree "Tryton: Tree View" b
+<tree string="${1:Titles}">
+    ${2}
+</tree>
+endsnippet
+
+snippet view_inform "Tryton: Inherited Form View" b
+<data>
+    <xpath expr="/form/${1:field}[@${2:name}='${3:fieldname}']" position="${4:after}">
+        ${5}
+    </xpath>
+</data>
+endsnippet
+
+snippet view_intree "Tryton: Inherited Tree View" b
+<data>
+    <xpath expr="/tree/${1:field}[@${2:name}='${3:fieldname}']" position="${4:after}">
+        ${5}
+    </xpath>
+</data>
+endsnippet
+
+snippet view_field "Tryton: Record Field Tag" b
+${5:<label name="$1"/>
+}<field name="${1:fieldname}"${2: colspan="${3}"}${4: mode="${5:tree,form}"}/>
 endsnippet
 
 
