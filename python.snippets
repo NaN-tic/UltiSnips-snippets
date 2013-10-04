@@ -139,6 +139,28 @@ cls._error_messages.update({
     })
 endsnippet
 
+snippet def_validate "Tryton: validate() classmethod validation" b
+@classmethod
+def validate(cls, ${1:records}):
+    super(${2:ClassName}, cls).validate($1)
+    ${3:cls.check_${4:validation}($1)
+
+@classmethod
+def check_$4(cls, $1):
+    ${6}}
+endsnippet
+
+snippet def_validate "Tryton: validate() instance method validation" b
+@classmethod
+def validate(cls, ${1:records}):
+    super(${2:ClassName}, cls).validate($1)
+    ${3:for ${4:record} in $1:
+        $4.check_${5:validation}()
+
+def check_$5(self):
+    ${6}}
+endsnippet
+
 snippet try_create "Tryton: create() reimplementation" b
 @classmethod
 def create(cls, vlist):
