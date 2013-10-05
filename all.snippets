@@ -41,6 +41,14 @@ snippet try_copy_head "Tryton Copyright Header" b
 
 endsnippet
 
+snippet tryton_issue "Tryton: add issue section in local.cfg" b
+[i${1:redmine_issue}]
+repo = hg
+patch = True
+path = ${2:./modules/${3:module_name}/}${4:./trytond/}
+url = http://codereview.nan-tic.com/download/issue${5:rietveld_issue}_${6:rieltveld_patch_set}.diff
+endsnippet
+
 snippet nan_open_license "OpenERP License" b
 ##############################################################################
 #

@@ -24,7 +24,7 @@ from trytond.transaction import Transaction
 endsnippet
 
 snippet tryclass "Tryton: new model" b
-from trytond.model import ModelSQL, ModelView
+from trytond.model import ModelSQL, ModelView, fields
 
 __all__ = ['$1']
 
@@ -49,13 +49,32 @@ class ${1:ClassName}:
     ${3}
 endsnippet
 
+snippet _order "Tryton: _order attribute of Model" b
+_order = [('${1:fieldname}', '${2:ASC}')${3}]
+endsnippet
+
 snippet fields.Char "Tryton: fields.Char()" b
-${1:fieldname} = fields.Char('${2:Field Title}'${3:, translate=True}${4:, required=True}${5:, readonly=True}${8}${6:,
-    help='${7}'})
+${1:fieldname} = fields.Char('${2:Field Title}'${3:, translate=True}${4:, size=${5}}${6:, required=True}${7:, readonly=True}${10}${8:,
+    help='${9}'})
+endsnippet
+
+snippet fields.Text "Tryton: fields.Text()" b
+${1:fieldname} = fields.Text('${2:Field Title}'${3:, translate=True}${4:, size=${5}}${6:, required=True}${7:, readonly=True}${10}${8:,
+    help='${9}'})
 endsnippet
 
 snippet fields.Boolean "Tryton: fields.Boolean()" b
-${1:fieldname} = fields.Boolean('${2:Field Title}'${3:, required=True}${4:, readonly=True}${7}${5:,
+${1:fieldname} = fields.Boolean('${2:Field Title}'${3:, readonly=True}${6}${4:,
+    help='${5}'})
+endsnippet
+
+snippet fields.Integer "Tryton: fields.Integer()" b
+${1:fieldname} = fields.Integer('${2:Field Title}'${3:, required=True}${4:, readonly=True}${7}${5:,
+    help='${6}'})
+endsnippet
+
+snippet fields.BigInteger "Tryton: fields.BigInteger()" b
+${1:fieldname} = fields.BigInteger('${2:Field Title}'${3:, required=True}${4:, readonly=True}${7}${5:,
     help='${6}'})
 endsnippet
 
@@ -64,14 +83,24 @@ ${1:fieldname} = fields.Numeric('${2:Field Title}', digits=(16, ${3:4})${4:, req
     help='${7}'})
 endsnippet
 
-snippet fields.SelectionStatic "Tryton: fields.Selection() static options" b
+snippet fields.Date "Tryton: fields.Date()" b
+${1:fieldname} = fields.Date('${2:Field Title}'${3:, required=True}${4:, readonly=True}${7}${5:,
+    help='${6}'})
+endsnippet
+
+snippet fields.DateTime "Tryton: fields.DateTime()" b
+${1:fieldname} = fields.Date('${2:Field Title}'${3:, format=${4:'%H:M:%S'}}${5:, required=True}${6:, readonly=True}${9}${7:,
+    help='${8}'})
+endsnippet
+
+snippet fields.Selection "Tryton: fields.Selection() static options" b
 ${1:fieldname} = fields.Selection([
         ${2:('draft', 'Draft'),}${3}
         ], '${4:Field Title}'${5:, required=True}${6:, readonly=True}${7:, select=True}${10}${8:,
     help='${9}'})
 endsnippet
 
-snippet fields.SelectionDynamic " Tryton: fields.Selection() static options" b
+snippet fields.Selection " Tryton: fields.Selection() static options" b
 ${1:fieldname} = fields.Selection('get_${2:$1s}', '${3:Field Title}'${4:, sort=True}${5:, selection_change_with=[${6:'fieldname',}]}${7:, required=True}${8:, readonly=True}${9:, select=True}${12}${10:,
     help='${11}'})
 
@@ -96,23 +125,46 @@ ${1:fieldname} = fields.Function(${4:field},
     'get_$1'${2:, setter='set_$1'}${3:, searcher='search_$1'})
 endsnippet
 
-snippet getter "Tryton: functional field instance getter" b
+snippet def_rec_name "Tryton: getter for rec_name" b
+def get_rec_name(self, name):
+    return ${1}
+endsnippet
+
+snippet def_on_change "Tryton: function to compute values of fields when $1 change value" b
+def on_change_with_${1:fieldname}(self):${6}
+    return ${2:{
+        ${3:'${4:res_fieldname}': ${5},}
+        }}
+endsnippet
+
+snippet def_on_change_with "Tryton: function to compute value of field when $1 change value" b
+def on_change_with_${1:fieldname}(self, name=None):${3}
+    return ${2}
+endsnippet
+
+snippet def_getter "Tryton: functional field instance getter" b
 def get_${1:fieldname}(self, name):${3}
     return ${2}
 endsnippet
 
-snippet classgetter "Tryton: functional field class getter" b
+snippet def_getter "Tryton: functional field class getter" b
 @classmethod
 def get_${1:fieldname}(cls, ${2:records}, name):
     ${4}
     return ${3:{record_id: record_value}}
 endsnippet
 
-snippet multigetter "Tryton: function multi fields getter" b
+snippet def_getter "Tryton: function multi fields getter" b
 @classmethod
 def get_${1:name}(cls, ${2:records}, names):
     ${4}
     return ${3:{'fieldname': {record_id: record_value}}}
+endsnippet
+
+snippet states "Tryton: states fields attribute" b
+states={
+    ${1:'${2:required}': ${3:Eval('${4:field_name}', 0)},}
+    }, depends=['$4']
 endsnippet
 
 snippet def_setup "Tryton: __setup__()" b
@@ -137,6 +189,12 @@ snippet error_messages "Tryton: cls._error_messages extension" b
 cls._error_messages.update({
     ${1}
     })
+endsnippet
+
+snippet def_default "Tryton: default_fieldname() function" b
+@staticmethod
+def default_${1:field_name}():
+    return ${2:True}
 endsnippet
 
 snippet def_validate "Tryton: validate() classmethod validation" b
@@ -197,7 +255,7 @@ endsnippet
 snippet raise_error "Tryton: raise user exception" b
 cls.raise_user_error('${1:exception_text_name}'${2:, (${3:substitution value},)})
 
-        '$1': ('${4:Exception Text}'),
+'$1': '${4:Exception Text}',
 endsnippet
 
 ###############################################################################
