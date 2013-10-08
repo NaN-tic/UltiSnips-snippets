@@ -83,6 +83,11 @@ ${1:fieldname} = fields.Numeric('${2:Field Title}', digits=(16, ${3:4})${4:, req
     help='${7}'})
 endsnippet
 
+snippet fields.Float "Tryton: fields.Float()" b
+${1:fieldname} = fields.Float('${2:Field Title}', digits=(16, ${3:Eval('unit_digits', 2)})${4:, required=True}${5:, readonly=True}${8}${6:,
+    help='${7}'})
+endsnippet
+
 snippet fields.Date "Tryton: fields.Date()" b
 ${1:fieldname} = fields.Date('${2:Field Title}'${3:, required=True}${4:, readonly=True}${7}${5:,
     help='${6}'})
@@ -108,6 +113,11 @@ ${1:fieldname} = fields.Selection('get_${2:$1s}', '${3:Field Title}'${4:, sort=T
 def get_$2():
     return [(name, title),]
 
+endsnippet
+
+snippet fields.Binary "Tryton: fields.Binary()" b
+${1:fieldname} = fields.Binary('${2:Field Title}'${3:, required=True}${4:, readonly=True}${7}${5:,
+    help='${6}'})
 endsnippet
 
 snippet fields.Reference "Tryton: fields.Reference()" b
@@ -138,6 +148,19 @@ endsnippet
 snippet fields.One2Many "Tryton: fields.One2Many()" b
 ${1:fieldname} = fields.One2Many('${2:target.model}', '${3:many2one_field_in_target}', '${4:Field Title}'${5:, required=True}${6:, readonly=True}${9}${7:,
     help='${8}'})
+endsnippet
+
+snippet fields.Many2Many "Tryton: fields.Many2Many()" b
+${1:fieldname} = fields.Many2Many('${2:current-model}-${3:target.model}', '${4:field_to_this}', '${5:field_to_target}', '${6:Field Title}'${15}${13:,
+    help='${14}'})
+
+
+class ${7:CurrentModel}${8:TargetModel}(ModelSQL):
+    '${9:$7} - ${10:$8}'
+    __name__ = '$2-$3'
+    ${11:_table = '${12:shorter_table_name}'
+    }$4 = fields.Many2One('$2', '$9', ondelete='CASCADE', required=True, select=True)
+    $5 = fields.Many2One('$3', '$9', ondelete='CASCADE', required=True, select=True)
 endsnippet
 
 snippet fields.Function "Tryton: fields.Function()" b
