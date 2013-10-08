@@ -93,14 +93,14 @@ ${1:fieldname} = fields.Date('${2:Field Title}'${3:, format=${4:'%H:M:%S'}}${5:,
     help='${8}'})
 endsnippet
 
-snippet fields.Selection "Tryton: fields.Selection() static options" b
+snippet fields.Selection "Tryton: fields.Selection() list options" b
 ${1:fieldname} = fields.Selection([
         ${2:('draft', 'Draft'),}${3}
         ], '${4:Field Title}'${5:, required=True}${6:, readonly=True}${7:, select=True}${10}${8:,
     help='${9}'})
 endsnippet
 
-snippet fields.Selection " Tryton: fields.Selection() static options" b
+snippet fields.Selection "Tryton: fields.Selection() dynamic options" b
 ${1:fieldname} = fields.Selection('get_${2:$1s}', '${3:Field Title}'${4:, sort=True}${5:, selection_change_with=[${6:'fieldname',}]}${7:, required=True}${8:, readonly=True}${9:, select=True}${12}${10:,
     help='${11}'})
 
@@ -108,6 +108,26 @@ ${1:fieldname} = fields.Selection('get_${2:$1s}', '${3:Field Title}'${4:, sort=T
 def get_$2():
     return [(name, title),]
 
+endsnippet
+
+snippet fields.Reference "Tryton: fields.Reference()" b
+${1:fieldname} = fields.Reference('${2:Field Title}', selection='get_${3:$1}'${4:, selection_change_with=[${5:'fieldname',}]}${6:, required=True}${7:, readonly=True}${8:, select=True}${11}${9:,
+    help='${10}'})
+
+@classmethod
+def _get_$3(cls):
+    'Return list of Model names for $1 Reference'
+    return [${12}]
+
+@classmethod
+def get_$3(cls):
+    pool = Pool()
+    Model = pool.get('ir.model')
+    models = cls._get_$3()
+    models = Model.search([
+            ('model', 'in', models),
+            ])
+    return [('', '')] + [(m.model, m.name) for m in models]
 endsnippet
 
 snippet fields.Many2One "Tryton: fields.Many2One()" b
@@ -159,6 +179,14 @@ snippet def_getter "Tryton: function multi fields getter" b
 def get_${1:name}(cls, ${2:records}, names):
     ${4}
     return ${3:{'fieldname': {record_id: record_value}}}
+endsnippet
+
+snippet def_searcher "Tryton: functional field searcher" b
+@classmethod
+def search_${1:fieldname}(cls, name, clause):
+    return [
+        ${2}
+        ]
 endsnippet
 
 snippet states "Tryton: states fields attribute" b
