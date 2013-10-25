@@ -218,6 +218,14 @@ states={
     }, depends=['$4']
 endsnippet
 
+snippet field-company "Tryton: standard definition of company field" b
+company = fields.Many2One('company.company', 'Company', required=True,
+    domain=[
+        ('id', If(In('company', Eval('context', {})), '=', '!='),
+            Eval('context', {}).get('company', -1)),
+        ])
+endsnippet
+
 snippet def_setup "Tryton: __setup__()" b
 @classmethod
 def __setup__(cls):
