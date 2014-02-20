@@ -47,6 +47,7 @@ snippet record_inform "Tryton: Record for Inherited Form View" b
 <record model="ir.ui.view" id="${1:model_id}_view_form">
     <field name="model">${2:model.name}</field>
     <field name="inherit" ref="${3:inherit_model}.${4:$1_view_form}"/>
+    <field name="type">form</field>
     <field name="name">$1_form</field>
 </record>
 endsnippet
@@ -55,6 +56,7 @@ snippet record_inlist "Tryton: Record for Inherited List View" b
 <record model="ir.ui.view" id="${1:model_id}_view_list">
     <field name="model">${2:model.name}</field>
     <field name="inherit" ref="${3:inherit_model}.${4:$1_view_${5:tree}}"/>
+    <field name="type">tree</field>
     <field name="name">$1_list</field>
 </record>
 endsnippet
@@ -104,8 +106,8 @@ snippet view_intree "Tryton: Inherited Tree View" b
 endsnippet
 
 snippet <field "Tryton: Record Field Tag" b
-${5:<label name="$1"/>
-}<field name="${1:fieldname}"${2: colspan="${3}"}${4: mode="${5:tree,form}"}/>
+${6:<label name="$1"/>
+}<field name="${1:fieldname}"${2: colspan="${3}"}${4: mode="${5:tree,form}"}/>${7}
 endsnippet
 
 
