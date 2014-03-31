@@ -1,32 +1,203 @@
-snippet tryton_small_license "Tryton Small License for code Files" b
-<!--The COPYRIGHT file at the top level of this repository contains the full 
-copyright notices and license terms. -->
-endsnippet
-
-snippet tryton_xml "Tryton xml structure"
+snippet nan_header "Tryton: NaN·tic modules file header" b
 <?xml version="1.0"?>
-<!--The COPYRIGHT file at the top level of this repository contains the full 
-copyright notices and license terms. -->
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
 <tryton>
     <data>
-        ${0}
+        ${1}
     </data>
 </tryton>
 endsnippet
 
-snippet tryton_tree_view "Tryton Tree view"
-<!-- ${1:model} -->
-<record model="ir.ui.view" id="${2:id}">
-    <field name="model">$1</field>
-    <field name="type">tree</field>
-    <field name="priority" eval="20"/>
-    <field name="fiedl_childs">${3:children}</field>
-    <field name="arch" type="xml">
-        <![CDATA[
-        <tree string="${4:Label}">
-        </tree>
-        ]]>
+snippet core_header "Tryton: Core modules file header" b
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<tryton>
+    <data>
+        ${1}
+    </data>
+</tryton>
+endsnippet
 
-    </field>    
+snippet nan_view_header "Tryton: NaN·tic views file header" b
+<?xml version="1.0"?>
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
+${1}
+endsnippet
+
+snippet core_view_header "Tryton: Core views file header" b
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+${1}
+endsnippet
+
+snippet record_form "Tryton: Record for Form View" b
+<record model="ir.ui.view" id="${1:model_id}_view_form">
+    <field name="model">${2:model.name}</field>
+    <field name="type">form</field>
+    <field name="name">$1_form</field>
 </record>
+endsnippet
+
+snippet record_inform "Tryton: Record for Inherited Form View" b
+<record model="ir.ui.view" id="${1:model_id}_view_form">
+    <field name="model">${2:model.name}</field>
+    <field name="inherit" ref="${3:inherit_model}.${4:$1_view_form}"/>
+    <field name="name">$1_form</field>
+</record>
+endsnippet
+
+snippet record_list "Tryton: Record for List View" b
+<record model="ir.ui.view" id="${1:model_id}_view_list">
+    <field name="model">${2:model.name}</field>
+    <field name="type">tree</field>
+    <field name="name">$1_list</field>
+</record>
+endsnippet
+
+snippet record_inlist "Tryton: Record for Inherited List View" b
+<record model="ir.ui.view" id="${1:model_id}_view_list">
+    <field name="model">${2:model.name}</field>
+    <field name="inherit" ref="${3:inherit_model}.${4:$1_view_${5:tree}}"/>
+    <field name="name">$1_list</field>
+</record>
+endsnippet
+
+snippet record_tree "Tryton: Record for Tree View" b
+<record model="ir.ui.view" id="${1:model_id}_view_tree">
+    <field name="model">${2:model.name}</field>
+    <field name="type">tree</field>
+    <field name="field_childs">${3:childs}</field>
+    <field name="name">$1_list</field>
+</record>
+endsnippet
+
+snippet act_window "Tryton Action Window record" b
+<record model="ir.action.act_window" id="act_${1:model_id}">
+    <field name="name">${2:plural_title}</field>
+    <field name="res_model">${3:model_name}</field>
+    <field name="search_value"></field>
+    <field name="domain"></field>
+    <field name="context"></field>
+</record>
+endsnippet
+
+snippet act_formview "Tryton Action Window List View record" b
+<record model="ir.action.act_window.view" id="act_${1:model_id}_view1">
+    <field name="sequence" eval="10"/>
+    <field name="view" ref="$1_list_view"/>
+    <field name="act_window" ref="act_$1"/>
+</record>
+endsnippet
+
+snippet act_listview "Tryton Action Window List View record" b
+<record model="ir.action.act_window.view" id="act_${1:model_id}_view2">
+    <field name="sequence" eval="20"/>
+    <field name="view" ref="$1_form_view"/>
+    <field name="act_window" ref="act_$1"/>
+</record>
+endsnippet
+
+snippet completeview "Tryton Complete view" b
+<record model="ir.ui.view" id="${1:model_id}_form_view">
+    <field name="model">${2:model_name}</field>
+    <field name="type">form</field>
+    <field name="name">$1_form</field>
+</record>
+
+<record model="ir.ui.view" id="$1_list_view">
+    <field name="model">$2</field>
+    <field name="type">tree</field>
+    <field name="name">$1_list</field>
+</record>
+
+<record model="ir.action.act_window" id="act_$1">
+    <field name="name">${3:plural_title}</field>
+    <field name="res_model">$2</field>
+    <field name="search_value"></field>
+    <field name="domain"></field>
+    <field name="context"></field>
+</record>
+
+<record model="ir.action.act_window.view" id="act_$1_view1">
+    <field name="sequence" eval="10"/>
+    <field name="view" ref="$1_list_view"/>
+    <field name="act_window" ref="act_$1"/>
+</record>
+
+<record model="ir.action.act_window.view" id="act_$1_view2">
+    <field name="sequence" eval="20"/>
+    <field name="view" ref="$1_form_view"/>
+    <field name="act_window" ref="act_$1"/>
+</record>
+endsnippet
+
+snippet record_button "Tryton: Record for button" b
+<record model="ir.model.button" id="${1:model_id}_${2:button_id}_button">
+    <field name="name">$2</field>
+    <field name="model" search="[('model', '=', '${3:model.model}')]"/>
+</record>
+<record model="ir.model.button-res.group"
+    id="$1_$2_button_${4:group_id}">
+    <field name="button" ref="$1_$2_button"/>
+    <field name="group" ref="${5:other_module.}$4"/>
+</record>
+endsnippet
+
+snippet record_data "Tryton: Record for data registers" b
+<record model="${1:model.name}" id="${2:model_name_record_id}">
+    ${3:fields}
+</record>
+endsnippet
+
+snippet view_form "Tryton: Form View" b
+<form string="${1:Title}"${2: col="${3}"}>
+    ${4}
+</form>
+endsnippet
+
+snippet view_tree "Tryton: Tree View" b
+<tree string="${1:Titles}">
+    ${2}
+</tree>
+endsnippet
+
+snippet view_inform "Tryton: Inherited Form View" b
+<data>
+    <xpath expr="/form/${1:field}[@${2:name}='${3:fieldname}']" position="${4:after}">
+        ${5}
+    </xpath>
+</data>
+endsnippet
+
+snippet view_intree "Tryton: Inherited Tree View" b
+<data>
+    <xpath expr="/tree/${1:field}[@${2:name}='${3:fieldname}']" position="${4:after}">
+        ${5}
+    </xpath>
+</data>
+endsnippet
+
+snippet <field "Tryton: Record Field Tag" b
+<field name="${1:fieldname}">${2:Field Value}</field>
+endsnippet
+
+snippet <field "Tryton: Record Field Tag eval" b
+<field name="${1:fieldname}" eval="${2:value}"/>
+endsnippet
+
+snippet <field "Tryton: Record Field Tag ref" b
+<field name="${1:fieldname}" ref="${2:xml_id}"/>
+endsnippet
+
+snippet <field "Tryton: View Field Tag" b
+<field name="${1:fieldname}"/>
+endsnippet
+
+snippet <field "Tryton: View Field Tag with label" b
+${6:<label name="$1"/>
+}<field name="${1:fieldname}"${2: colspan="${3}"}${4: mode="${5:tree,form}"}/>${7}
 endsnippet
