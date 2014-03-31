@@ -186,7 +186,7 @@ class ${7:CurrentModel}${8:TargetModel}(ModelSQL):
     __name__ = '$2-$3'
     ${11:_table = '${12:shorter_table_name}'
     }$4 = fields.Many2One('$2', '$9', ondelete='CASCADE', required=True, select=True)
-    $5 = fields.Many2One('$3', '$9', ondelete='CASCADE', required=True, select=True)
+    $5 = fields.Many2One('$3', '$10', ondelete='CASCADE', required=True, select=True)
 endsnippet
 
 snippet fields.Function "Tryton: fields.Function()" b
