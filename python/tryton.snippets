@@ -1,0 +1,67 @@
+snippet tryton_small_license "Tryton licens for code files" b
+# The COPYRIGHT file at the top level of this repository contains the full 
+# copyright notices and license terms.
+endsnippet
+
+snippet tryton_import "Tryton imports" b
+from trytond.model import ModelView, ModelSQL, fields
+from trytond.pyson import Eval
+from trytond.backend import TableHandler
+from trytond.transaction import Transaction
+from trytond.pool import Pool
+endsnippet
+
+snippet tryton_class "Tryton class definition" b
+
+__all__ = ['$1']
+
+class $1(ModelSQL, ModelView):
+    '${2:Description}'
+    __name__ = '${3:model}'
+    _inherits = {'${4:model}':'${5:field}'}
+
+    $0
+
+endsnippet
+
+#Tryton Fields definition
+snippet fields.Many2one "Tryton Many2one Field" 
+${1:name} = fields.Many2One('${2:model}','${3:Label}',required=${4:True},
+        ondelete='${5:CASCADE})'
+endsnippet
+
+snippet fields.Selection "Tryton Selection Field"
+${1:name} = fields.Selection([${5:(key,value)}], ${2:Label}, 
+        required=${3:True}, select=${4:True} )
+endsnippet
+
+snippet fields.Float "Tryton Float Field"
+${1:name} = fields.Float( ${2:Label})
+endsnippet
+
+snippet fields.Integer "Tryton Integer Field"
+${1:name} = fields.Integer( ${2:Label})
+endsnippet
+
+snippet fields.Text "Tryton Text Field"
+${1:name} = fields.Text(${2:Label})
+endsnippet
+
+snippet fields.integer "tryton integer field"
+${1:name} = fields.integer(${2:label})
+endsnippet
+
+snippet fields.Function "tryton Function field"
+${1:name} = fields.Function( ${2:fields.type}, '${3:getter}',
+            setter='${4:set_parent}', searcher='${5:search_parent}'))
+endsnippet
+
+snippet fields.One2Many "tryton One2Many field"
+${1:name} = fields.One2Many( ${2:model}, '${3:field_id}',${4:Label})
+endsnippet
+
+snippet fields.Boolean "tryton Boolean field"
+${1:name} = fields.Boolean('${2:Label}')
+endsnippet
+
+

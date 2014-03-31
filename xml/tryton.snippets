@@ -1,0 +1,32 @@
+snippet tryton_small_license "Tryton Small License for code Files" b
+<!--The COPYRIGHT file at the top level of this repository contains the full 
+copyright notices and license terms. -->
+endsnippet
+
+snippet tryton_xml "Tryton xml structure"
+<?xml version="1.0"?>
+<!--The COPYRIGHT file at the top level of this repository contains the full 
+copyright notices and license terms. -->
+<tryton>
+    <data>
+        ${0}
+    </data>
+</tryton>
+endsnippet
+
+snippet tryton_tree_view "Tryton Tree view"
+<!-- ${1:model} -->
+<record model="ir.ui.view" id="${2:id}">
+    <field name="model">$1</field>
+    <field name="type">tree</field>
+    <field name="priority" eval="20"/>
+    <field name="fiedl_childs">${3:children}</field>
+    <field name="arch" type="xml">
+        <![CDATA[
+        <tree string="${4:Label}">
+        </tree>
+        ]]>
+
+    </field>    
+</record>
+endsnippet
