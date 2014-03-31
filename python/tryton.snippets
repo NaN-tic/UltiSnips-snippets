@@ -1,9 +1,14 @@
-snippet tryton_small_license "Tryton licens for code files" b
-# The COPYRIGHT file at the top level of this repository contains the full 
+snippet nan_header "Tryton: NaN·tic modules file header" b
+# The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
 endsnippet
 
-snippet tryton_import "Tryton imports" b
+snippet core_header "Tryton: Core modules file header" b
+# This file is part of Tryton.  The COPYRIGHT file at the top level of
+# this repository contains the full copyright notices and license terms.
+endsnippet
+
+snippet imports "Tryton imports" b
 from trytond.model import ModelView, ModelSQL, fields
 from trytond.pyson import Eval
 from trytond.backend import TableHandler
@@ -11,57 +16,344 @@ from trytond.transaction import Transaction
 from trytond.pool import Pool
 endsnippet
 
-snippet tryton_class "Tryton class definition" b
+snippet import_model "Tryton: model classes import" b
+from trytond.model import Workflow, Model, ModelView, ModelSQL, fields
+endsnippet
+
+snippet import_pyson "Tryton: Pyson classes import" b
+from trytond.pyson import In, Eval, Not, Equal, If, Get, Bool
+endsnippet
+
+snippet import_transaction "Tryton: Transaction method import" b
+from trytond.transaction import Transaction
+endsnippet
+
+snippet class "Tryton: new model" b
+from trytond.model import ModelSQL, ModelView, fields
 
 __all__ = ['$1']
 
-class $1(ModelSQL, ModelView):
-    '${2:Description}'
-    __name__ = '${3:model}'
-    _inherits = {'${4:model}':'${5:field}'}
 
-    $0
+class ${1:ClassName}(ModelSQL, ModelView):
+    '''${2:Model Title}'''
+    __name__ = '${3:model.name}'
+
+    ${4}
+endsnippet
+
+snippet inclass "Tryton: inherit model" b
+from trytond.pool import PoolMeta
+
+__all__ = ['$1']
+__metaclass__ = PoolMeta
+
+
+class ${1:ClassName}:
+    __name__ = '${2:model.name}'
+
+    ${3}
+endsnippet
+
+snippet _order "Tryton: _order attribute of Model" b
+_order = [('${1:fieldname}', '${2:ASC}')${3}]
+endsnippet
+
+snippet fields.Char "Tryton: fields.Char()" b
+${1:fieldname} = fields.Char('${2:Field Title}'${3:, translate=True}${4:, size=${5}}${6:, required=True}${7:, readonly=True}${10}${8:,
+    help='${9}'})
+endsnippet
+
+snippet fields.Text "Tryton: fields.Text()" b
+${1:fieldname} = fields.Text('${2:Field Title}'${3:, translate=True}${4:, size=${5}}${6:, required=True}${7:, readonly=True}${10}${8:,
+    help='${9}'})
+endsnippet
+
+snippet fields.Boolean "Tryton: fields.Boolean()" b
+${1:fieldname} = fields.Boolean('${2:Field Title}'${3:, readonly=True}${6}${4:,
+    help='${5}'})
+endsnippet
+
+snippet fields.Integer "Tryton: fields.Integer()" b
+${1:fieldname} = fields.Integer('${2:Field Title}'${3:, required=True}${4:, readonly=True}${7}${5:,
+    help='${6}'})
+endsnippet
+
+snippet fields.BigInteger "Tryton: fields.BigInteger()" b
+${1:fieldname} = fields.BigInteger('${2:Field Title}'${3:, required=True}${4:, readonly=True}${7}${5:,
+    help='${6}'})
+endsnippet
+
+snippet fields.Numeric "Tryton: fields.Numeric()" b
+${1:fieldname} = fields.Numeric('${2:Field Title}', digits=(16, ${3:4})${4:, required=True}${5:, readonly=True}${8}${6:,
+    help='${7}'})
+endsnippet
+
+snippet fields.Float "Tryton: fields.Float()" b
+${1:fieldname} = fields.Float('${2:Field Title}', digits=(16, ${3:Eval('unit_digits', 2)})${4:, required=True}${5:, readonly=True}${8}${6:,
+    help='${7}'})
+endsnippet
+
+snippet fields.Date "Tryton: fields.Date()" b
+${1:fieldname} = fields.Date('${2:Field Title}'${3:, required=True}${4:, readonly=True}${7}${5:,
+    help='${6}'})
+endsnippet
+
+snippet fields.DateTime "Tryton: fields.DateTime()" b
+${1:fieldname} = fields.Date('${2:Field Title}'${3:, format=${4:'%H:M:%S'}}${5:, required=True}${6:, readonly=True}${9}${7:,
+    help='${8}'})
+endsnippet
+
+snippet fields.Selection "Tryton: fields.Selection() list options" b
+${1:fieldname} = fields.Selection([
+        ${2:('draft', 'Draft'),}${3}
+        ], '${4:Field Title}'${5:, required=True}${6:, readonly=True}${7:, select=True}${10}${8:,
+    help='${9}'})
+endsnippet
+
+snippet fields.Selection "Tryton: fields.Selection() dynamic options" b
+${1:fieldname} = fields.Selection('get_${2:$1s}', '${3:Field Title}'${4:, sort=True}${5:, selection_change_with=[${6:'fieldname',}]}${7:, required=True}${8:, readonly=True}${9:, select=True}${12}${10:,
+    help='${11}'})
+
+@staticmethod
+def get_$2():
+    return [(name, title),]
 
 endsnippet
 
-#Tryton Fields definition
-snippet fields.Many2one "Tryton Many2one Field" 
-${1:name} = fields.Many2One('${2:model}','${3:Label}',required=${4:True},
-        ondelete='${5:CASCADE})'
+snippet fields.Binary "Tryton: fields.Binary()" b
+${1:fieldname} = fields.Binary('${2:Field Title}'${3:, filename='fieldname_filename'}${4:, required=True}${5:, readonly=True}${8}${6:,
+    help='${7}'})
 endsnippet
 
-snippet fields.Selection "Tryton Selection Field"
-${1:name} = fields.Selection([${5:(key,value)}], ${2:Label}, 
-        required=${3:True}, select=${4:True} )
+snippet fields.Reference "Tryton: fields.Reference()" b
+${1:fieldname} = fields.Reference('${2:Field Title}', selection='get_${3:$1}'${4:, selection_change_with=[${5:'fieldname',}]}${6:, required=True}${7:, readonly=True}${8:, select=True}${11}${9:,
+    help='${10}'})
+
+@classmethod
+def _get_$3(cls):
+    'Return list of Model names for $1 Reference'
+    return [${12}]
+
+@classmethod
+def get_$3(cls):
+    pool = Pool()
+    Model = pool.get('ir.model')
+    models = cls._get_$3()
+    models = Model.search([
+            ('model', 'in', models),
+            ])
+    return [('', '')] + [(m.model, m.name) for m in models]
 endsnippet
 
-snippet fields.Float "Tryton Float Field"
-${1:name} = fields.Float( ${2:Label})
+snippet fields.Many2One "Tryton: fields.Many2One()" b
+${1:fieldname} = fields.Many2One('${2:target.model}', '${3:Field Title}'${4:, required=True}${5:, readonly=True}${6:, select=True}${7:, ondelete='${8:CASCADE}'}${11}${9:,
+    help='${10}'})
 endsnippet
 
-snippet fields.Integer "Tryton Integer Field"
-${1:name} = fields.Integer( ${2:Label})
+snippet fields.One2Many "Tryton: fields.One2Many()" b
+${1:fieldname} = fields.One2Many('${2:target.model}', '${3:many2one_field_in_target}', '${4:Field Title}'${5:, required=True}${6:, readonly=True}${9}${7:,
+    help='${8}'})
 endsnippet
 
-snippet fields.Text "Tryton Text Field"
-${1:name} = fields.Text(${2:Label})
+snippet fields.One2One "Tryton: fields.One2One() (main relation side)" b
+${1:fieldname} = fields.One2One('${2:current-model}-${3:target.model}', '${4:field_to_this}', '${5:field_to_target}', '${6:Field Title}'${7:, required=True}${8:, readonly=True}${17}${15:,
+    help='${16}'})
+
+
+class ${9:CurrentModel}${10:TargetModel}(ModelSQL):
+    '${11:$9} - ${12:$10}'
+    __name__ = '$2-$3'
+    ${13:_table = '${14:shorter_table_name}'
+    }$4 = fields.Many2One('$2', '$11', ondelete='CASCADE', required=True, select=True)
+    $5 = fields.Many2One('$3', '$12', ondelete='CASCADE', required=True, select=True)
+
+    @classmethod
+    def __setup__(cls):
+        super($9$10, cls).__setup__()
+        cls._sql_constraints += [
+            ('$4_unique', 'UNIQUE($4)', 'The $11 must be unique.'),
+            ('$5_unique', 'UNIQUE($5)', 'The $12 must be unique.'),
+            ]
 endsnippet
 
-snippet fields.integer "tryton integer field"
-${1:name} = fields.integer(${2:label})
+snippet fields.One2One "Tryton: fields.One2One() (secondary relation side)" b
+${1:fieldname} = fields.One2One('${2:target.model}-${3:current-model}', '${4:field_to_this}', '${5:field_to_target}', '${6:Field Title}'${7:, required=True}${8:, readonly=True}${11}${9:,
+    help='${10}'})
 endsnippet
 
-snippet fields.Function "tryton Function field"
-${1:name} = fields.Function( ${2:fields.type}, '${3:getter}',
-            setter='${4:set_parent}', searcher='${5:search_parent}'))
+snippet fields.Many2Many "Tryton: fields.Many2Many()" b
+${1:fieldname} = fields.Many2Many('${2:current-model}-${3:target.model}', '${4:field_to_this}', '${5:field_to_target}', '${6:Field Title}'${15}${13:,
+    help='${14}'})
+
+
+class ${7:CurrentModel}${8:TargetModel}(ModelSQL):
+    '${9:$7} - ${10:$8}'
+    __name__ = '$2-$3'
+    ${11:_table = '${12:shorter_table_name}'
+    }$4 = fields.Many2One('$2', '$9', ondelete='CASCADE', required=True, select=True)
+    $5 = fields.Many2One('$3', '$10', ondelete='CASCADE', required=True, select=True)
 endsnippet
 
-snippet fields.One2Many "tryton One2Many field"
-${1:name} = fields.One2Many( ${2:model}, '${3:field_id}',${4:Label})
+snippet fields.Function "Tryton: fields.Function()" b
+${1:fieldname} = fields.Function(${4:field},
+    'get_$1'${2:, setter='set_$1'}${3:, searcher='search_$1'})
 endsnippet
 
-snippet fields.Boolean "tryton Boolean field"
-${1:name} = fields.Boolean('${2:Label}')
+snippet states "Tryton: states fields attribute" b
+states={
+    ${1:'${2:required}': ${3:Eval('${4:field_name}', 0)},}
+    }, depends=['$4']
 endsnippet
 
+snippet field-company "Tryton: standard definition of company field" b
+company = fields.Many2One('company.company', 'Company', required=True,
+    domain=[
+        ('id', If(In('company', Eval('context', {})), '=', '!='),
+            Eval('context', {}).get('company', -1)),
+        ])
+endsnippet
 
+####    Methods    ####
+snippet setup "Tryton: __setup__()" b
+@classmethod
+def __setup__(cls):
+    super(${1:ClassName}, cls).__setup__()
+    ${2}
+endsnippet
+
+snippet sql_constraints "Tryton: cls._sql_constraints" b
+cls._sql_constraints += [
+    ${1}
+    ]
+endsnippet
+
+snippet unique_constraint "Tryton: UNIQUE SQL Constraint" b
+('${1:fieldname}_uniq', 'UNIQUE ($1)',
+    'The ${2:Field Title} of the ${3:Model Title} must be unique.'),
+endsnippet
+
+snippet error_messages "Tryton: cls._error_messages extension" b
+cls._error_messages.update({
+        ${1}
+        })
+endsnippet
+
+snippet default "Tryton: default_fieldname() function" b
+@staticmethod
+def default_${1:field_name}():
+    return ${2:True}
+endsnippet
+
+snippet rec_name "Tryton: getter for rec_name" b
+def get_rec_name(self, name):
+    return ${1}
+endsnippet
+
+snippet on_change "Tryton: function to compute values of fields when $1 change value" b
+def on_change_with_${1:fieldname}(self):${6}
+    return ${2:{
+        ${3:'${4:res_fieldname}': ${5},}
+        }}
+endsnippet
+
+snippet on_change_with "Tryton: function to compute value of field when $1 change value" b
+def on_change_with_${1:fieldname}(self, name=None):${3}
+    return ${2}
+endsnippet
+
+snippet getter "Tryton: functional field instance getter" b
+def get_${1:fieldname}(self, name):${3}
+    return ${2}
+endsnippet
+
+snippet getter "Tryton: functional field class getter" b
+@classmethod
+def get_${1:fieldname}(cls, ${2:records}, name):
+    ${4}
+    return ${3:{record_id: record_value}}
+endsnippet
+
+snippet getter "Tryton: function multi fields getter" b
+@classmethod
+def get_${1:name}(cls, ${2:records}, names):
+    ${4}
+    return ${3:{'fieldname': {record_id: record_value}}}
+endsnippet
+
+snippet setter "Tryton: functional field setter" b
+@classmethod
+def set_${1:fielname}(cls, ${2:records}, name, value):
+    ${3:cls.write($2, {
+            '${4:fieldname}': ${5:value},
+            })}
+endsnippet
+
+snippet searcher "Tryton: functional field searcher" b
+@classmethod
+def search_${1:fieldname}(cls, name, clause):
+    return [
+        ${2}
+        ]
+endsnippet
+
+snippet validate "Tryton: validate() instance method validation" b
+@classmethod
+def validate(cls, ${1:records}):
+    super(${2:ClassName}, cls).validate($1)
+    for ${3:record} in $1:
+        $3.check_${4:validation}()
+
+@classmethod
+def check_$4(self):
+    ${5}
+endsnippet
+
+snippet validate "Tryton: validate() classmethod validation" b
+@classmethod
+def validate(cls, ${1:records}):
+    super(${2:ClassName}, cls).validate($1)
+    cls.check_${4:validation}($1)
+
+@classmethod
+def check_$4(cls, $1):
+    ${5}
+endsnippet
+
+snippet create "Tryton: create() reimplementation" b
+@classmethod
+def create(cls, vlist):
+    ${3:for vals in vlist:
+        }
+    ${2:return} super(${1:ClassName}, cls).create(vlist)
+endsnippet
+
+snippet copy "Tryton: copy() reimplementation" b
+@classmethod
+def copy(cls, ${1:records}, default=None):
+    if default is None:
+        default = {}
+    else:
+        default = default.copy()
+    ${3}
+    return super(${2:ClassName}, cls).copy($1, default=default)
+endsnippet
+
+snippet write "Tryton: write() reimplementation" b
+@classmethod
+def write(cls, ${1:records}, vals):
+    ${3}
+    super(${2:ClassName}, cls).write($1, vals)
+endsnippet
+
+snippet delete "Tryton: delete() reimplementation" b
+@classmethod
+def delete(cls, ${1:records}):
+    ${3}
+    super(${2:ClassName}, cls).delete($1)
+endsnippet
+
+snippet raise_error "Tryton: raise user exception" b
+cls.raise_user_error('${1:exception_text_name}'${2:, (${3:substitution value},)})
+
+'$1': '${4:Exception Text}',
+endsnippet
