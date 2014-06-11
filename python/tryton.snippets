@@ -99,8 +99,18 @@ ${1:fieldname} = fields.Date('${2:Field Title}'${3:, required=True}${4:, readonl
 endsnippet
 
 snippet fields.DateTime "Tryton: fields.DateTime()" b
-${1:fieldname} = fields.Date('${2:Field Title}'${3:, format=${4:'%H:M:%S'}}${5:, required=True}${6:, readonly=True}${9}${7:,
+${1:fieldname} = fields.DateTime('${2:Field Title}'${3:, format=${4:'%H:M:%S'}}${5:, required=True}${6:, readonly=True}${9}${7:,
     help='${8}'})
+endsnippet
+
+snippet fields.Time "Tryton: fields.Time()" b
+${1:fieldname} = fields.Time('${2:Field Title}'${3:, format=${4:'%H:M:%S'}}${5:, required=True}${6:, readonly=True}${9}${7:,
+    help='${8}'})
+endsnippet
+
+snippet fields.Timestamp "Tryton: fields.Timestamp()" b
+${1:fieldname} = fields.Timestamp('${2:Field Title}'${3:, required=True}${4:, readonly=True}${7}${5:,
+    help='${6}'})
 endsnippet
 
 snippet fields.Selection "Tryton: fields.Selection() list options" b
