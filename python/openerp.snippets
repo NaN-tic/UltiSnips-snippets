@@ -332,6 +332,12 @@ snippet log-netsvc "log netsvc" b
 netsvc.Logger().notifyChannel(self._name, netsvc.${1:LOG_DEBUG}, "${2:log_message}")${3}
 endsnippet
 
+snippet raise-except "OpenERP: raise osv.except_osv" b
+raise osv.except_osv(_("${1:Error title}"), _("${2:Error message}")${3: % {
+		${4:'key': value,}
+		}})
+endsnippet
+
 snippet odef "New OpenERP Method" b
 def ${1:method_name}(self, cr, uid, ids):
     result = None
