@@ -9,19 +9,24 @@ snippet core_header "Tryton: Core modules file header" b
 endsnippet
 
 snippet imports "Tryton imports" b
-from trytond.model import ModelView, ModelSQL, fields
+from trytond.model import, ModelSQL ModelView, fields
 from trytond.pyson import Eval
 from trytond.backend import TableHandler
 from trytond.transaction import Transaction
 from trytond.pool import Pool
 endsnippet
 
-snippet import_model "Tryton: model classes import" b
-from trytond.model import Workflow, Model, ModelView, ModelSQL, fields
+snippet import_model "tryton: model classes import" b
+from trytond.model import Model, ModelSQL, ModelView, Workflow, fields
+endsnippet
+
+snippet import_wizard "tryton: wizard classes import" b
+from trytond.wizard import (Wizard, Button, StateAction, StateTransition,
+	StateView)
 endsnippet
 
 snippet import_pyson "Tryton: Pyson classes import" b
-from trytond.pyson import In, Eval, Not, Equal, If, Get, Bool
+from trytond.pyson import Bool, If, In, Equal, Eval, Get, Not
 endsnippet
 
 snippet import_transaction "Tryton: Transaction method import" b
