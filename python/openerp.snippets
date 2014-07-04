@@ -164,7 +164,7 @@ endsnippet
 
 snippet def_read    "def read" b
 def read(self, cr, uid, ids, fields=None, context=None, load='_classic_read'):
-    res = super(${1:ModelName}, self).read(cr, uid, ids, fields, context)
+    res = super(${1:ModelName}, self).read(cr, uid, ids, fields=fields, context=context, load=load)
     #TODO: process on result
     return res ${cr}
 endsnippet
