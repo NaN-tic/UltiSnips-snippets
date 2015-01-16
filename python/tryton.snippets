@@ -265,17 +265,17 @@ def get_rec_name(self, name):
 endsnippet
 
 snippet on_change "Tryton: function to compute values of fields when $1 change value" b
-@fields.depends(${6:used fields})
+@fields.depends(${2:used fields})
 def on_change_${1:fieldname}(self):${7}
-    return ${2:{
-        ${3:'${4:res_fieldname}': ${5},}
+    return ${3:{
+        ${4:'${5:res_fieldname}': ${6},}
         }}
 endsnippet
 
 snippet on_change_with "Tryton: function to compute value of field when $1 change value" b
-@fields.depends(${3:used fields})
+@fields.depends(${2:used fields})
 def on_change_with_${1:fieldname}(self, name=None):${4}
-    return ${2}
+    return ${3}
 endsnippet
 
 snippet @fields.depends "Tryton: decorator for on_change/_with functions to specify which fields supply to the function in self object" b
