@@ -266,7 +266,7 @@ endsnippet
 
 snippet on_change "Tryton: function to compute values of fields when $1 change value" b
 @fields.depends(${6:used fields})
-def on_change_with_${1:fieldname}(self):${7}
+def on_change_${1:fieldname}(self):${7}
     return ${2:{
         ${3:'${4:res_fieldname}': ${5},}
         }}
@@ -416,8 +416,14 @@ def delete(cls, ${1:records}):
     super(${2:ClassName}, cls).delete($1)
 endsnippet
 
-snippet raise_error "Tryton: raise user exception" b
-cls.raise_user_error('${1:exception_text_name}'${2:, (${3:substitution value},)})
+snippet raise_error "Tryton: raise user error" b
+cls.raise_user_error('${1:exception_text_name}'${2:, (${3:substitution value},)}${4:, raise_exception=False})
 
-'$1': '${4:Exception Text}',
+'$1': '${5:Exception Text}',
+endsnippet
+
+snippet raise_warning "Tryton: raise user warning" b
+cls.raise_user_warning('${1:warning_id}', '${2:warning_message_name}'${3:, (${4:substitution value},)})
+
+'$1': '${5:Warning Text}',
 endsnippet
